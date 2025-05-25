@@ -10,8 +10,6 @@ import (
 func main() {
 	db.InitDB()
 
-	go ws.StartBroadcast()
-
 	r := gin.Default()
 
 	r.GET("/ws", ws.HandleWS)
