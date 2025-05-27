@@ -2,6 +2,7 @@ package ws
 
 import (
 	"encoding/json"
+	"fmt"
 	"jammies_streaming/src/db"
 	"jammies_streaming/src/models"
 	"jammies_streaming/src/types"
@@ -32,6 +33,7 @@ var upgrader = websocket.Upgrader{
 
 func HandleWS(c *gin.Context) {
 	roomID := c.Query("room_id")
+	fmt.Println("WS connecting to room", roomID)
 	if roomID == "" {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Missing room_id"})
 		return
@@ -101,7 +103,8 @@ func readPump(client *Client) {
 			}
 			continue
 		}
-		if state.Event == "playing" || state.Event == "paused" {
+
+		if state.Event == "playing" || state.Event == "paused" || state.Event == "seek" {
 			trackID, err := uuid.Parse(state.TrackID)
 			if err != nil {
 				log.Println("Invalid UUID:", err)
