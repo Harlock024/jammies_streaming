@@ -11,8 +11,6 @@ import (
 
 var DB *gorm.DB
 
-var DB *gorm.DB
-
 func InitDB() {
 	if os.Getenv("RENDER") == "" {
 		err := godotenv.Load()
